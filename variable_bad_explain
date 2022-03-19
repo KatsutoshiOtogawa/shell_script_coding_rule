@@ -1,0 +1,60 @@
+#!/bin/bash
+#
+#
+
+set -eu
+
+if [ -z $ENVIRONMENT_VARIABLE ]; then
+
+  echo "環境変数が設定されていなかったら、処理するがしたい。"
+  echo "you set environment variable ENVIRONMENT_VARIABLE!" >&2
+  return 
+fi
+
+
+# trapの例
+# 丁寧にエラー管理したいなら、下のように書く必要がある。
+trap "
+    echo error internal
+    trap - ERR
+    exit
+" ERR
+
+
+## 
+
+# set -e しても
+
+trap "
+  echo ここにエラー処理をかく。
+  echo error internal
+  trap - ERR
+  exit 1
+" ERR
+
+trap "
+  echo ここに関数抜ける時の共通処理を書く。
+  trap - EXIT
+  echo なんど呼ばれてもエラーにならないので、宣言しとく。
+  trap - ERR
+" EXIT
+
+function trap_func {
+  trap "
+    echo ここにエラー処理をかく。
+    echo error internal
+    trap - ERR
+    return 11
+  " ERR
+
+  trap "
+    echo ここに関数抜ける時の共通処理を書く。
+    trap - RETURN
+    echo なんど呼ばれてもエラーにならないので、宣言しとく。
+    trap - ERR
+  " RETURN
+
+  # エラーが起きる処理をかく。
+  which aa
+}
+

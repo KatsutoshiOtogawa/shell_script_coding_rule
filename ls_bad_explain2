@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+
+set -e
+
+if ! ls -1 | grep error_occured > /dev/null; then
+  echo abcd
+fi
+
+echo aaa

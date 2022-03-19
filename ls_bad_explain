@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+
+set -e
+
+# ls -1 | grep error_occured
+
+if ls -1 | grep error_occured; then
+  echo "if inner" >&2
+fi
+
+# if ls -1 | grep error_occured > /dev/null; then
+#   echo "if inner" >&2
+# else
+#   echo "else inner" >&2
+# fi
+
+echo aaa
