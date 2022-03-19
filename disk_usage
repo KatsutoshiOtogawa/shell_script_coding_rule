@@ -18,7 +18,7 @@
 function disk_usage() {
 
   # gnuとbsdの差を埋める関数を読み込む。
-  source $(dirname $0)/../function/gnu_alias
+  source $(dirname $0)/function/gnu_alias
   if ! gnu_alias; then
     return 1;
   fi
@@ -41,7 +41,7 @@ function disk_usage() {
   )
   # 使用率以上の行がない場合はヘッダーのみ表示。
   if [ -z "${row_nums}" ]; then
-    df | sed '1p'
+    df | sed -n '1p'
     return
   fi
 
